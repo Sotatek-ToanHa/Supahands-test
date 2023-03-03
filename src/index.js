@@ -1,57 +1,6 @@
-import moment from "moment";
 import { readFileSync } from "fs";
-import { printTable } from "console-table-printer";
-
+import { handleNumberOfLogin } from "./handleLogin.js";
 const fileUrl = new URL("./mockLoginData.json", import.meta.url);
 const mockLoginData = JSON.parse(readFileSync(fileUrl).toString());
 
-export function handleNumberOfLogin(mockLoginData) {
-  const sortedData = formatAndSortData(mockLoginData);
-  calculateConsecutiveLogins(sortedData);
-}
-
-export const formatAndSortData = (data) => {
-  let formatData = new Set();
-  for (const item of mockLoginData) {
-    //Check is Date and format data
-    if (moment(item).isValid()) {
-      formatData.add(moment(item).format("YYYY-MM-DD"));
-    }
-  }
-  //Convert to Array and Sort in descending order
-  return Array.from(formatData).sort().reverse();
-};
-
-export const calculateConsecutiveLogins = (loginData) => {
-  // 1. start, end: is the beginning date and is the end date
-  // 2. distance: To check for 2 consecutive days
-  // 3. results: is the final result of the test
-  let start, end, distance;
-  let results = [];
-  let numberOfConsecutiveLogins = 1;
-  for (let i = 0; i < loginData.length; i++) {
-    const currentDate = loginData[i];
-    const nextDate = loginData[i + 1];
-    distance = moment(currentDate).diff(moment(nextDate), "days");
-    if (distance === 1) {
-      //If it's 2 adjacent days
-      if (numberOfConsecutiveLogins === 1) {
-        start = currentDate;
-      }
-      numberOfConsecutiveLogins += 1;
-      end = nextDate;
-    } else {
-      results.push({
-        start: end || currentDate,
-        end: start || currentDate,
-        length: numberOfConsecutiveLogins,
-      });
-      numberOfConsecutiveLogins = 1;
-      start = nextDate;
-      end = nextDate;
-    }
-  }
-  printTable(results);
-};
-
-// handleNumberOfLogin(mockLoginData);
+handleNumberOfLogin(mockLoginData);
