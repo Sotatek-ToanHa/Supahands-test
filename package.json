@@ -1,0 +1,24 @@
+{
+  "name": "software-engineering-test",
+  "version": "1.0.0",
+  "description": "test",
+  "main": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "node src",
+    "test": "mocha"
+  },
+  "author": "tyler",
+  "license": "ISC",
+  "dependencies": {
+    "chai-deep-match": "^1.2.1",
+    "console-table-printer": "^2.11.1",
+    "fs": "^0.0.1-security",
+    "moment": "^2.29.4",
+    "save-dev": "^0.0.1-security"
+  },
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0"
+  }
+}
