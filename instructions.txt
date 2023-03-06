@@ -1,0 +1,14 @@
+#To run the test follow these steps:
+
+1. Make sure you have Nodejs installed. If we have installed Nodejs, we need to install some libraries used in the project with the command `npm i`.
+
+2. Run `npm run dev` to run our application. Before running you can create new input data then update it in `mockLoginData.json` file.
+
+3. Run `npm test` to test the functions in the system. The purpose of this is to make the functions run well under the circumstances. 
+
+
+#Details of the libraries used in the project:
+1. `fs` to handle files
+2. `moment` to handle date and time
+3. `console-table-printer` to show results on console
+4. `chai`, `mocha` to check if the functions run well under the circumstances

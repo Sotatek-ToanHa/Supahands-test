@@ -1,5 +1,8 @@
-import chain, { expect } from "chai";
-import { formatAndSortData, calculateConsecutiveLogins } from "../src/handleLogin.js";
+import { expect } from "chai";
+import {
+  formatAndSortLoginData,
+  calculateConsecutiveLogins,
+} from "../src/handleLogin.js";
 
 const mockData1 = [
   "asdasd",
@@ -36,14 +39,9 @@ const finalResultOfMockData1 = [
 ];
 
 describe("Calculate the number of days of login", function () {
-  // add a test hook
-  beforeEach(function () {
-    // ...some logic before each test is run
-  });
-
   context("Format and sort login Data", function () {
     it("should return formatAndSortData1", function () {
-      expect(formatAndSortData(mockData1).toString()).to.equal(
+      expect(formatAndSortLoginData(mockData1).toString()).to.equal(
         formatAndSortData1.toString()
       );
       context("Calculate Number Of Consecutive Logins", function () {

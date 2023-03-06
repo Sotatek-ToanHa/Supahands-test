@@ -1,22 +1,20 @@
 import moment from "moment";
-import { readFileSync } from "fs";
 import { printTable } from "console-table-printer";
-
-const fileUrl = new URL("./mockLoginData.json", import.meta.url);
-const mockLoginData = JSON.parse(readFileSync(fileUrl).toString());
+import { DATE_FORMAT } from "./constants/index.js";
 
 export function handleNumberOfLogin(mockLoginData) {
-  const sortedData = formatAndSortData(mockLoginData);
+  const sortedData = formatAndSortLoginData(mockLoginData);
   const results = calculateConsecutiveLogins(sortedData);
+  // Show results on console
   printTable(results);
 }
 
-export const formatAndSortData = (data) => {
+export const formatAndSortLoginData = (data) => {
   let formatData = new Set();
   for (const item of data) {
     //Check is Date and format data
     if (moment(new Date(item)).isValid()) {
-      formatData.add(moment(new Date(item)).format("YYYY-MM-DD"));
+      formatData.add(moment(new Date(item)).format(DATE_FORMAT));
     }
   }
   //Convert to Array and Sort in descending order
@@ -24,7 +22,7 @@ export const formatAndSortData = (data) => {
 };
 
 export const calculateConsecutiveLogins = (loginData) => {
-  // 1. start, end: is the beginning date and is the end date
+  // 1. start, end: is the beginning date and the end date of consecutive login days
   // 2. distance: To check for 2 consecutive days
   // 3. results: is the final result of the test
   let start, end, distance;
@@ -37,22 +35,22 @@ export const calculateConsecutiveLogins = (loginData) => {
       moment(new Date(nextDate)),
       "days"
     );
+    //If it's 2 adjacent days
     if (distance === 1) {
-      //If it's 2 adjacent days
       if (numberOfConsecutiveLogins === 1) {
         start = currentDate;
       }
-      numberOfConsecutiveLogins += 1;
       end = nextDate;
+      numberOfConsecutiveLogins += 1;
     } else {
       results.push({
         start: end || currentDate,
         end: start || currentDate,
         length: numberOfConsecutiveLogins,
       });
-      numberOfConsecutiveLogins = 1;
       start = nextDate;
       end = nextDate;
+      numberOfConsecutiveLogins = 1;
     }
   }
   return results;
